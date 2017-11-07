@@ -1,0 +1,9 @@
+{
+  "name": "Superfarmer",
+  "version": "1.0.0",
+  "repository": "https://github.com/PSchwalkowski/Superfarmer.git",
+  "author": "Paweł Schwałkowski <p.schwalkowski@gmail.com>",
+  "scripts": {
+    "dev": "php -S localhost:8000"
+  }
+}
