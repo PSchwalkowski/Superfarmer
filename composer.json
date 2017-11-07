@@ -14,5 +14,8 @@
     "psr-4": {
       "Farmer\\": "Farmer/"
     }
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^3.3"
   }
 }
