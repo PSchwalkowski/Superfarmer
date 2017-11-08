@@ -66,7 +66,6 @@ class AbstractHerd {
 		}
 	}
 
-
 	/**
 	 * @param Animal\AbstractAnimal $firstAnimal
 	 * @param Animal\AbstractAnimal $secondAnimal
@@ -130,5 +129,19 @@ class AbstractHerd {
 		}
 
 		return $animals;
+	}
+
+	public function attack(Animal\AbstractAnimal $aggressor) {
+		$afraidOf = $this->getAnimalsBySpecie($aggressor->getAfraidOf());
+
+		if (empty($afraidOf)) {
+			foreach ($this->animals as $key => $animal) {
+				if (in_array($this->getAnimalSpeice($animal), $aggressor->getCanKill())) {
+					unset($this->animals[$key]);
+				}
+			}
+		} else {
+			unset($this->animals[key($afraidOf)]);
+		}
 	}
 }
