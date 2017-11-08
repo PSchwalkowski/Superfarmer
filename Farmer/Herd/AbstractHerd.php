@@ -39,7 +39,7 @@ class AbstractHerd {
 	 */
 	public function reproduce(Animal\AbstractAnimal $firstAnimal, Animal\AbstractAnimal $secondAnimal) {
 		if ($this->getAnimalSpeice($firstAnimal) == $this->getAnimalSpeice($secondAnimal) &&
-			!in_array($this->getAnimalSpeice($secondAnimal), ['Farmer\Animal\Horse', 'Farmer\Animal\Cow'])) {
+			!in_array($this->getAnimalSpeice($secondAnimal), [Horse::class, Cow::class])) {
 			$this->addAnimals($firstAnimal, 1);
 		} else {
 			$this->reproduceAnimal($firstAnimal);
@@ -66,16 +66,32 @@ class AbstractHerd {
 		}
 	}
 
+
 	/**
 	 * @param Animal\AbstractAnimal $firstAnimal
 	 * @param Animal\AbstractAnimal $secondAnimal
+	 *
+	 * @throws \Exception
 	 */
 	public function exchange(Animal\AbstractAnimal $firstAnimal, Animal\AbstractAnimal $secondAnimal) {
-		$firstAnimalSpecie = $this->getAnimalSpeice($firstAnimal);
-		$secondAnimalSpecie = $this->getAnimalSpeice($secondAnimal);
+		if ($this->getAnimalSpeice($firstAnimal) == $this->getAnimalSpeice($secondAnimal)) {
+			throw new \Exception('Choose different animals for exchange!');
+		}
 
-		VarDumper::dump($firstAnimalSpecie);
-		VarDumper::dump($secondAnimalSpecie);
+
+//		if ($this->getAnimalSpeice($firstAnimal) == $secondAnimal->getExchangeFor()) {
+//			$availableAnimals = $this->getAnimalsBySpecie($secondAnimal->getExchangeFor());
+//
+//			if (count($availableAnimals) >= $secondAnimal->getExchhangeAmount()) {
+//				foreach ($availableAnimals as $key => $availableAnimal) {
+//					unset($this->animals[$key]);
+//				}
+//
+//				$this->addAnimals($secondAnimal, 1);
+//			}
+//		} else {
+//
+//		}
 	}
 
 	/**
@@ -94,9 +110,9 @@ class AbstractHerd {
 	 */
 	protected function getAnimalsBySpecie(string $speice): array {
 		$animals = [];
-		foreach ($this->animals as $animal) {
+		foreach ($this->animals as $key => $animal) {
 			if ($this->getAnimalSpeice($animal) == $speice) {
-				$animals[] = $animal;
+				$animals[$key] = $animal;
 			}
 		}
 
