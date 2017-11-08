@@ -78,20 +78,33 @@ class AbstractHerd {
 			throw new \Exception('Choose different animals for exchange!');
 		}
 
+		$firstAnimalSpeice = $this->getAnimalSpeice($firstAnimal);
+		foreach ($secondAnimal->getExchangeFor() as $speice => $amount) {
+			if ($firstAnimalSpeice == $speice) {
+				$availableAnimals = $this->getAnimalsBySpecie($speice);
 
-//		if ($this->getAnimalSpeice($firstAnimal) == $secondAnimal->getExchangeFor()) {
-//			$availableAnimals = $this->getAnimalsBySpecie($secondAnimal->getExchangeFor());
-//
-//			if (count($availableAnimals) >= $secondAnimal->getExchhangeAmount()) {
-//				foreach ($availableAnimals as $key => $availableAnimal) {
-//					unset($this->animals[$key]);
-//				}
-//
-//				$this->addAnimals($secondAnimal, 1);
-//			}
-//		} else {
-//
-//		}
+				if ($amount > 0) {
+					if (count($availableAnimals) >= $amount) {
+						$i = 0;
+						foreach ($availableAnimals as $key => $availableAnimal) {
+							if ($i < $amount) {
+								unset($this->animals[$key]);
+								$i++;
+							}
+						}
+
+						$this->addAnimals($secondAnimal, 1);
+					}
+				} else if ($amount < 0) {
+					$amount *= -1;
+
+					if (count($availableAnimals)) {
+						unset($this->animals[key($availableAnimals)]);
+						$this->addAnimals($secondAnimal, $amount);
+					}
+				}
+			}
+		}
 	}
 
 	/**

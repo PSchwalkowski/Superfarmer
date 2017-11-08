@@ -10,7 +10,10 @@ class AbstractAnimal {
 	 */
 	protected $exchangeFor = [];
 
-	protected function getExchangeFor(): array {
+	/**
+	 * @return array
+	 */
+	public function getExchangeFor(): array {
 		return $this->exchangeFor;
 	}
 }
